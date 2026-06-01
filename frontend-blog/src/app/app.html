@@ -1,0 +1,78 @@
+<style>
+  /* === MENÜYÜ YUKARIYA SABİTLEYEN CAM EFEKTİ === */
+  .nav-wrapper { position: sticky; top: 0; z-index: 1000; background: rgba(10, 10, 12, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+  .top-navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 20px; max-width: 1200px; margin: 0 auto; }
+  .logo { font-size: 1.8rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+  .logo span { color: #00e5ff; }
+  .nav-links { display: flex; gap: 35px; align-items: center; }
+  .nav-link { color: #aaa; text-decoration: none; font-weight: 500; font-size: 1rem; transition: color 0.3s; }
+  .nav-link:hover { color: #fff; }
+  
+  .donate-btn { background: linear-gradient(90deg, #5b62ff 0%, #00e5ff 100%); color: #fff; padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 8px; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer; font-family: inherit; font-size: 1rem; }
+  .donate-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2); color: #fff; }
+
+  /* === KAYAN YAZI === */
+  .marquee-wrapper { max-width: 1200px; margin: 20px auto 30px auto; padding: 0 20px; }
+  .marquee-container { overflow: hidden; white-space: nowrap; background: rgba(255, 255, 255, 0.02); padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05); }
+  .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; font-size: 1.1rem; font-weight: 600; color: #00e5ff; letter-spacing: 1px; }
+  @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
+  /* === BAĞIŞ PENCERESİ (MODAL) TASARIMI === */
+  .donate-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; animation: fadeIn 0.3s forwards; }
+  .donate-modal-box { background: #121214; max-width: 500px; width: 100%; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); position: relative; padding: 40px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); transform: scale(0.9); animation: popUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; text-align: center; }
+  .donate-close-btn { position: absolute; top: 15px; right: 20px; background: rgba(255,255,255,0.05); border: none; font-size: 1.5rem; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; color: #fff; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  .donate-close-btn:hover { background: #00e5ff; color: #000; transform: rotate(90deg); }
+  .iban-box { background: #1a1a1c; border: 1px solid rgba(0, 229, 255, 0.3); padding: 20px; border-radius: 12px; margin-top: 25px; color: #00e5ff; font-weight: bold; font-size: 1.2rem; letter-spacing: 1px; word-break: break-all; user-select: all; }
+
+  /* İŞTE BENİM UNUTTUĞUM EKSİK ANİMASYON KODLARI BURADA! */
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes popUp { to { transform: scale(1); } }
+</style>
+
+<div class="nav-wrapper animate-fade-up">
+  <nav class="top-navbar">
+    <a routerLink="/" class="logo">Berk İğmar<span>.</span></a>
+    <div class="nav-links">
+      <a routerLink="/about" class="nav-link">Hakkımda</a>
+      <a href="https://instagram.com/igmar2698" target="_blank" class="nav-link">Instagram</a>
+      <a href="https://youtube.com/@hons2698" target="_blank" class="nav-link">YouTube</a>
+      <button (click)="openDonateModal()" class="donate-btn">☕ Kahve Ismarla</button>
+    </div>
+  </nav>
+</div>
+
+<div class="marquee-wrapper animate-fade-up" style="animation-delay: 0.1s;">
+  <div class="marquee-container">
+    <div class="marquee-text">
+      🚀 Berk İğmar'ın Kişisel Bloguna Hoş Geldiniz! | Yazılım, Projeler ve Teknoloji | Güncel Projelere Aşağıdan Göz Atın...
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+
+<button (click)="toggleTheme()" 
+        style="position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px; border-radius: 50%; border: none; background: #00e5ff; color: #000; font-size: 1.6rem; cursor: pointer; box-shadow: 0 5px 15px rgba(0, 229, 255, 0.4); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;">
+  @if (!isLightMode) { <span>☀️</span> } @else { <span>🌙</span> }
+</button>
+
+@if (isDonateModalOpen) {
+  <div class="donate-modal-overlay" (click)="closeDonateModal()">
+    <div class="donate-modal-box" (click)="$event.stopPropagation()">
+      <button class="donate-close-btn" (click)="closeDonateModal()">✕</button>
+      
+      <h2 style="color: #fff; font-size: 2rem; margin-top: 0; margin-bottom: 15px; line-height: 1.2;">
+        Desteğin İçin<br>
+        <span style="background: linear-gradient(90deg, #00e5ff 0%, #7b2cbf 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Teşekkürler!</span>
+      </h2>
+      
+      <p style="color: #ccc; line-height: 1.6; font-size: 1.05rem;">Projelerime destek olmak veya bana bir kahve ısmarlamak istersen aşağıdaki IBAN numarasını kullanabilirsin. Adını mesaja eklersen çok sevinirim!</p>
+      
+      <div class="iban-box">
+        TR12 3456 7890 0000 0000 0000 00
+      </div>
+      
+      <p style="color: #888; font-size: 0.9rem; margin-top: 15px;">Alıcı: Berk İğmar</p>
+    </div>
+  </div>
+}
