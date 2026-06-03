@@ -33,9 +33,11 @@ export class Home implements OnInit {
   successMessage = '';
 
   ngOnInit() {
-    this.http.get('http://127.0.0.1:8000/api/posts/?is_featured=true').subscribe({
+    // 1. CANLI LİNK EKLENDİ VE KUTU İÇİNDEN ÇIKARMA (RESULTS) DÜZELTİLDİ
+    this.http.get('https://final-blog-4p56.onrender.com/api/posts/?is_featured=true').subscribe({
       next: (data: any) => {
-        this.posts = data;
+        // İŞTE SİHİRLİ DOKUNUŞ: Veri pagination ile (results içinde) gelirse içinden alıyoruz
+        this.posts = data.results ? data.results : data;
         this.cdr.detectChanges();
       },
       error: (err) => console.error("Hata:", err)
@@ -52,7 +54,8 @@ export class Home implements OnInit {
     this.isSending = true;
     this.cdr.detectChanges(); // 'Kargolanıyor...' yazısını anında göstermek için
 
-    this.http.post('http://127.0.0.1:8000/api/contact/', this.contactData).subscribe({
+    // 2. İLETİŞİM FORMU CANLI LİNKE YÖNLENDİRİLDİ
+    this.http.post('https://final-blog-4p56.onrender.com/api/contact/', this.contactData).subscribe({
       next: (res: any) => {
         this.isSending = false;
         this.successMessage = "Mesajın başarıyla ulaştı kanka!";
