@@ -68,7 +68,18 @@ export class Home implements OnInit {
       error: (err) => {
         this.isSending = false;
         console.error("Mesaj gönderilirken hata:", err);
-        alert("Mesaj gönderilemedi kanka, API'de bir sorun olabilir.");
+        
+        // --- İŞTE YENİ EKLENEN PROFESYONEL HATA YAKALAMA KISMI ---
+        if (err.status === 400 && err.error) {
+          // Backend'den gelen hata objesinin içindeki mesajları çıkarıp birleştiriyoruz
+          let hataMesajlari = Object.values(err.error).flat().join('\n');
+          alert("Hata:\n" + hataMesajlari);
+        } else {
+          // Gerçekten sunucuya ulaşılamazsa veya farklı bir çökme varsa çalışacak standart hata
+          alert("Mesaj gönderilemedi kanka, sunucuya ulaşılamıyor.");
+        }
+        // --------------------------------------------------------
+
         this.cdr.detectChanges();
       }
     });

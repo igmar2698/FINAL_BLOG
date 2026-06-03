@@ -10,7 +10,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   template: `
     <div *ngIf="post" style="max-width: 800px; margin: auto; padding: 20px; color: white;">
       <h1>{{ post.title }}</h1>
-      <img [src]="'http://127.0.0.1:8000' + post.image" style="width: 100%; border-radius: 10px;">
+      <img *ngIf="post.image" [src]="post.image.includes('http') ? post.image : 'https://final-blog-4p56.onrender.com' + post.image" style="width: 100%; border-radius: 10px;">
       <p style="margin-top: 20px; line-height: 1.6;">{{ post.content }}</p>
     </div>
   `
@@ -24,8 +24,8 @@ export class PostDetailComponent implements OnInit {
     // URL'den ID'yi alıyoruz
     const id = this.route.snapshot.paramMap.get('id');
     
-    // O ID'ye ait veriyi Django'dan çekiyoruz
-    this.http.get(`http://127.0.0.1:8000/api/posts/${id}/`).subscribe({
+    // O ID'ye ait veriyi Django'dan (Render canlı linkinden) çekiyoruz
+    this.http.get(`https://final-blog-4p56.onrender.com/api/posts/${id}/`).subscribe({
       next: (data: any) => {
         this.post = data;
       },

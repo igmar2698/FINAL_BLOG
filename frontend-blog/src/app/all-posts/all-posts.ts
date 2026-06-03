@@ -23,7 +23,8 @@ export class AllPostsComponent implements OnInit {
   loadPosts() {
     // Tarayıcıyı kandırmak ve hafızadan okumasını engellemek için linkin sonuna anlık saati ekliyoruz
     const timestamp = new Date().getTime();
-    const apiUrl = `http://127.0.0.1:8000/api/posts/?t=${timestamp}`;
+    // BİZİM YENİ CANLI LİNKİMİZ BURAYA GELDİ:
+    const apiUrl = `https://final-blog-4p56.onrender.com/api/posts/?t=${timestamp}`;
 
     this.http.get<any[]>(apiUrl).subscribe({
       next: (data) => {

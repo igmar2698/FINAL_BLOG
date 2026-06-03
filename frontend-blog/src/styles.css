@@ -73,3 +73,20 @@ body.light-mode .close-btn {
   color: #111 !important;
   background: rgba(0,0,0,0.05) !important;
 }
+
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  color: #ffffff;
+  background-color: #24292e; /* GitHub koyu gri tonu */
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.github-btn:hover {
+  background-color: #2f363d; /* Hover olunca hafif açılan renk */
+}
