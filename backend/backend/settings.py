@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,16 +82,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# MASAÜSTÜNDEKİ YEREL MYSQL (XAMPP) AYARLARIMIZ
+# RENDER POSTGRESQL BULUT VERİTABANI AYARLARI
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog_db',      # phpMyAdmin'de açtığımız isim
-        'USER': 'root',         # XAMPP varsayılan kullanıcısı
-        'PASSWORD': '',         # XAMPP varsayılan şifresi boştur
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
+    'default': dj_database_url.parse('postgresql://blog_db_tfjy_user:nOCYmhcNC9oajJEMIVo5oph4X3R1ZtXZ@dpg-d8fts8l8nd3s7391duig-a.virginia-postgres.render.com/blog_db_tfjy')
 }
 
 
@@ -129,8 +124,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-import os
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -152,11 +145,11 @@ JAZZMIN_SETTINGS = {
     # Telif hakkı yazısı
     "copyright": "Berk İğmar",
     
-    # Sol menüdeki ikonlar (Sınıfların yanına havalı FontAwesome ikonları ekler)
+    # Sol menüdeki ikonlar
     "icons": {
         "auth.Group": "fas fa-users",
         "auth.User": "fas fa-user",
-        "api.Post": "fas fa-pen-nib", # Buradaki 'api.Post' senin app ve model adın, ona göre değiştirebilirsin
+        "api.Post": "fas fa-pen-nib", 
     },
     
     # Karanlık Mod / Aydınlık Mod butonu gelsin mi?
