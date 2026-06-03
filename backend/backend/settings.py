@@ -28,7 +28,19 @@ SECRET_KEY = 'django-insecure-bk7x0z)j=fqw$c&r=jcil+1qdt&-u$!m$tkoqvtxr1kwx^ftub
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://final-blog-4p56.onrender.com']
+
+# İŞTE GÜVENLİK DUVARINI AŞTIĞIMIZ YER (RENDER VE VERCEL İZİNLERİ)
+CSRF_TRUSTED_ORIGINS = [
+    'https://final-blog-4p56.onrender.com',
+    'https://final-blog-pi.vercel.app'
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'https://final-blog-4p56.onrender.com',
+    'https://final-blog-pi.vercel.app'
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Application definition
@@ -127,8 +139,6 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 JAZZMIN_SETTINGS = {
     # Panelin sekme başlığı
